@@ -15,7 +15,7 @@
 ##
 ############################################################################
 
-VERILOG_FILES = my_package.sv SV_RAND_CHECK.sv test.sv ahb_if.sv sram_if.sv sram_control.sv
+VERILOG_FILES = sram_control.sv
 VHDL_FILES = package_timing.vhd package_utility.vhd async.vhd cfg_sram.vhd
 TOPLEVEL = sram_control
 
