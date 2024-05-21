@@ -21,24 +21,11 @@ TOPLEVEL = sram_control
 
 help:
 	@echo "Make targets:"
-	@echo "> make vcs          	# Compile and run with VCS"
 	@echo "> make questa_gui   	# Compile and run with Questa in GUI mode"
 	@echo "> make questa_batch 	# Compile and run with Questa in batch mode"
 	@echo "> make clean        	# Clean up all intermediate files"
 	@echo "> make tar          	# Create a tar file for the current directory"
 	@echo "> make help         	# This message"
-
-#############################################################################
-# VCS section
-VCS_FLAGS = -sverilog -debug  -l comp.log
-vcs:	simv
-	./simv -l sim.log
-
-simv:   ${VERILOG_FILES} ${VHDL_FILES} clean
-	mkdir -p work
-	vlogan +v2k ${VHDL_FILES}
-	vlogan ${VCS_FLAGS} ${VERILOG_FILES}
-	vcs -full64 -debug_all -lca -t ps -top ${TOPLEVEL} -o simv
 
 #############################################################################
 # Questa section
