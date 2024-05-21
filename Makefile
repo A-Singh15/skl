@@ -15,9 +15,9 @@
 ##
 ############################################################################
 
-VERILOG_FILES = top.sv my_package.sv SV_RAND_CHECK.sv test.sv ahb_if.sv sram_if.sv sram_control.sv
+VERILOG_FILES = my_package.sv SV_RAND_CHECK.sv test.sv ahb_if.sv sram_if.sv sram_control.sv
 VHDL_FILES = package_timing.vhd package_utility.vhd async.vhd cfg_sram.vhd
-TOPLEVEL = top
+TOPLEVEL = sram_control
 
 help:
 	@echo "Make targets:"
@@ -38,7 +38,7 @@ simv:   ${VERILOG_FILES} ${VHDL_FILES} clean
 	mkdir -p work
 	vhdlan -work work ${VHDL_FILES}
 	vlogan ${VCS_FLAGS} ${VERILOG_FILES}
-	vcs -full64 -debug_all -lca -t ps ${TOPLEVEL}
+	vcs -full64 -debug_all -lca -t ps -top ${TOPLEVEL} -o simv
 
 #############################################################################
 # Questa section
