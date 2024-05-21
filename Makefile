@@ -15,9 +15,8 @@
 ##
 ############################################################################
 
-#VERILOG_FILES = top.sv sram_control.sv my_package.sv test.sv
 VERILOG_FILES = top.sv my_package.sv SV_RAND_CHECK.sv test.sv ahb_if.sv sram_if.sv sram_control.sv
-VHDL_FILES = package_timing.vhd package_utility.vhd async.vhd
+VHDL_FILES = package_timing.vhd package_utility.vhd async.vhd cfg_sram.vhd
 TOPLEVEL = top
 
 help:
@@ -36,25 +35,25 @@ vcs:	simv
 	./simv -l sim.log
 
 simv:   ${VERILOG_FILES} ${VHDL_FILES} clean
-	mkdir work
-	vhdlan ${VHDL_FILES}
+	mkdir -p work
+	vhdlan -work work ${VHDL_FILES}
 	vlogan ${VCS_FLAGS} ${VERILOG_FILES}
-	vcs ${TOPLEVEL}
+	vcs -full64 -debug_all -lca -t ps ${TOPLEVEL}
 
 #############################################################################
 # Questa section
 questa_gui: 
 	vlib work
 	vmap work work
-	vcom ${VHDL_FILES}
-	vlog ${VERILOG_FILES}
-	vsim -novopt -coverage -do "view wave;do wave.do;run -all" ${TOPLEVEL}
+	vcom -2008 ${VHDL_FILES}
+	vlog -sv ${VERILOG_FILES}
+	vsim -novopt -coverage -do "view wave; run -all" ${TOPLEVEL}
 
 questa_batch: ${VHDL_FILES} ${VERILOG_FILES} clean
 	vlib work
 	vmap work work
-	vcom ${VHDL_FILES}
-	vlog ${VERILOG_FILES}
+	vcom -2008 ${VHDL_FILES}
+	vlog -sv ${VERILOG_FILES}
 	vsim -c -novopt -coverage -do "run -all" ${TOPLEVEL}
 
 #############################################################################
