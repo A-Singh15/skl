@@ -36,7 +36,7 @@ vcs:	simv
 
 simv:   ${VERILOG_FILES} ${VHDL_FILES} clean
 	mkdir -p work
-	vhdlan -work work ${VHDL_FILES}
+	vlogan +v2k ${VHDL_FILES}
 	vlogan ${VCS_FLAGS} ${VERILOG_FILES}
 	vcs -full64 -debug_all -lca -t ps -top ${TOPLEVEL} -o simv
 
